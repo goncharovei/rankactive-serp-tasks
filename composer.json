@@ -1,5 +1,6 @@
 {
     "name": "goncharovei/rankactive-serp-tasks",
+	"version":"1.0.0",
     "type": "project",
     "description": "Test task for working with SERP API - DataForSEO API v.2",
     "keywords": [
