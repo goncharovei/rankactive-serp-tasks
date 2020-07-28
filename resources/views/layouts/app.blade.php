@@ -19,7 +19,20 @@
 	</head>
 	<body>
 		<div id="app">
-
+			
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href="/">{{ trans('task.setting_task') }}</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/">{{ trans('task.tasks_list') }}</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			
 			@if ($errors->any())
 			<div class="js-alert-box alert alert-danger alert-dismissible fade show" role="alert">
 				@foreach ($errors->all() as $error)
