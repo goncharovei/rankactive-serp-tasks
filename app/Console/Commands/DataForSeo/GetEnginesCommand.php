@@ -65,7 +65,7 @@ class GetEnginesCommand extends Command {
 			$item_key = 'dataforseo:search_engines:' . $item['se_id'];
 			Redis::multi()
 					->hMSet($item_key, $item)
-					->hSet('dataforseo:search_engines_map_sorted', $engine_index++, $item_key)
+					->hSet('dataforseo:search_engines_map_sorted', $engine_index++, $item['se_id'])
 					->exec();
 		}
 

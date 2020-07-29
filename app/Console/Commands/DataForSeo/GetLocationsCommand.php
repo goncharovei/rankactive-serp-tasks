@@ -65,7 +65,7 @@ class GetLocationsCommand extends Command {
 			$item_key = 'dataforseo:locations:' . $item['loc_id'];
 			Redis::multi()
 					->hMSet($item_key, $item)
-					->hSet('dataforseo:locations_map_sorted', $engine_index++, $item_key)
+					->hSet('dataforseo:locations_map_sorted', $engine_index++, $item['loc_id'])
 					->exec();
 		}
 
