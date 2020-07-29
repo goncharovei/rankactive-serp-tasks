@@ -3,7 +3,7 @@
 namespace App\Console\Commands\DataForSeo;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Redis;
+use App\Models\DataForSeo\SearchEngines;
 
 class GetEnginesCommand extends Command {
 
@@ -44,29 +44,15 @@ class GetEnginesCommand extends Command {
 			return Command::FAILURE;
 		}
 
-		$item_keys = Redis::hGetAll('dataforseo:search_engines_map_sorted');
-		Redis::unlink($item_keys);
-		Redis::unlink('dataforseo:search_engines_map_sorted');
+		SearchEngines::clear();
 
-		usort($items, function($a, $b) {
-			if (empty($a['se_country_name']) || empty($b['se_country_name'])) {
-				return 0;
-			}
-
-			return strcmp($a['se_country_name'], $b['se_country_name']);
-		});
-
-		$engine_index = 0;
+		usort($items, [SearchEngines::class, 'sort']);
 		foreach ($items as $item) {
 			if (empty($item['se_id'])) {
 				continue;
 			}
 			
-			$item_key = 'dataforseo:search_engines:' . $item['se_id'];
-			Redis::multi()
-					->hMSet($item_key, $item)
-					->hSet('dataforseo:search_engines_map_sorted', $engine_index++, $item['se_id'])
-					->exec();
+			SearchEngines::add($item);
 		}
 
 		$runtime_end = round(microtime(true) - $runtime_start, 4);

@@ -3,7 +3,7 @@
 namespace App\Console\Commands\DataForSeo;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Redis;
+use App\Models\DataForSeo\Locations;
 
 class GetLocationsCommand extends Command {
 
@@ -44,29 +44,15 @@ class GetLocationsCommand extends Command {
 			return Command::FAILURE;
 		}
 
-		$item_keys = Redis::hGetAll('dataforseo:locations_map_sorted');
-		Redis::unlink($item_keys);
-		Redis::unlink('dataforseo:locations_map_sorted');
-
-		usort($items, function($a, $b) {
-			if (empty($a['loc_name']) || empty($b['loc_name'])) {
-				return 0;
-			}
-
-			return strcmp($a['loc_name'], $b['loc_name']);
-		});
-
-		$engine_index = 0;
+		Locations::clear();
+		
+		usort($items, [Locations::class, 'sort']);
 		foreach ($items as $item) {
 			if (empty($item['loc_id'])) {
 				continue;
 			}
 			
-			$item_key = 'dataforseo:locations:' . $item['loc_id'];
-			Redis::multi()
-					->hMSet($item_key, $item)
-					->hSet('dataforseo:locations_map_sorted', $engine_index++, $item['loc_id'])
-					->exec();
+			Locations::add($item);
 		}
 
 		$runtime_end = round(microtime(true) - $runtime_start, 4);
