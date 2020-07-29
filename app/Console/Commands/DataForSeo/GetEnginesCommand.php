@@ -4,6 +4,7 @@ namespace App\Console\Commands\DataForSeo;
 
 use Illuminate\Console\Command;
 use App\Models\DataForSeo\SearchEngines;
+use Illuminate\Support\Facades\Redis;
 
 class GetEnginesCommand extends Command {
 
@@ -37,7 +38,7 @@ class GetEnginesCommand extends Command {
 	 */
 	public function handle() {
 		$runtime_start = microtime(true);
-
+		
 		$items = resolve('DFSService')->cmn_se();
 		if (empty($items) || !is_array($items)) {
 			$this->info('Fail. Details in the log');
