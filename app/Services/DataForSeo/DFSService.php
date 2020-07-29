@@ -2,6 +2,9 @@
 
 	namespace App\Services\DataForSeo;
 	
+	//Attention! The package https://github.com/jovixv/dataforseo is not installed on Laravel 7
+	//with error https://clip2net.com/s/48xVPXZ . 
+	//Vitaly (igrolan@gmail.com) knows about it.
 	class DFSService {
 		protected $client = null;
 		protected $logger = null;
@@ -67,7 +70,16 @@
 		protected function cmn_locations(): array {
 			return $this->client->get($this->api_version . __FUNCTION__ . $this->country_iso_code_path);
 		}
-
+		
+		protected function srp_tasks_post(array $post_array): array {
+			return $this->client->post($this->api_version . __FUNCTION__, ['data' => $post_array]);
+		}
+		
+		protected function srp_tasks_get(int $task_id = 0): array {
+			$task_id_path = !empty($task_id) ? '/' . $task_id_path : '';
+			return $this->client->get($this->api_version . __FUNCTION__ . $task_id_path);
+		}
+		
 		protected function loggerSaveError(string $text) {
 			if (empty($this->logger) || !is_object($this->logger) || !method_exists($this->logger, 'error')) {
 				error_log($text);
