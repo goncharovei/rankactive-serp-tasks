@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\DataForSeo\GetEnginesCommand::class,
+		Commands\DataForSeo\GetLocationsCommand::class,
+		Commands\DataForSeo\GetCompletedTasksCommand::class,
     ];
 
     /**
