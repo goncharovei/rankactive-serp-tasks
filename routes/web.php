@@ -13,4 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'SerpController@index')->name('home');
+Route::get('/', 'SerpController@index')->name('task_form');
+Route::get('search-engines', 'SerpController@searchEnginesGet')->name('task_search_engines');
+Route::get('locations', 'SerpController@locationsGet')->name('task_locations');
+Route::post('task-add', 'SerpController@taskAdd')->name('task_add');
+

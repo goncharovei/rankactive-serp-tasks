@@ -72,7 +72,7 @@
 		}
 		
 		protected function srp_tasks_post(array $post_array): array {
-			return $this->client->post($this->api_version . __FUNCTION__, ['data' => $post_array]);
+			return $this->client->post($this->api_version . __FUNCTION__, ['data' => $post_array[0]]);
 		}
 		
 		protected function srp_tasks_get(int $task_id = 0): array {

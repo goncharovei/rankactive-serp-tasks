@@ -15,6 +15,7 @@
 		
 		<!-- Styles -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		@yield('header_style')
 		<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	</head>
 	<body>
@@ -34,21 +35,14 @@
 			</nav>
 			
 			@if ($errors->any())
-			<div class="js-alert-box alert alert-danger alert-dismissible fade show" role="alert">
-				@foreach ($errors->all() as $error)
-				<div>{{ $error }}</div>
-				@endforeach
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
+				@include('includes.alert_danger', ['errors' => $errors->all()])
 			@endif
 
 			@if(session()->get('success'))
 				@include('includes.alert_success', ['message' => session()->get('success')])
 			@endif
 			
-			<main class="py-4">
+			<main id="js_content_box" class="py-4">
 				@yield('content')
 			</main>
 		</div>
@@ -57,7 +51,6 @@
 		<script type="text/javascript" src='https://code.jquery.com/jquery-latest.min.js'></script>
 		<script type="text/javascript" src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js'></script>
 		<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-		@section('footer_script')
-		@show
+		@yield('footer_script')
 	</body>
 </html>

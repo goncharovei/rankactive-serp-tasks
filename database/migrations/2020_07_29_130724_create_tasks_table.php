@@ -19,7 +19,8 @@ class CreateTasksTable extends Migration
 			$table->unsignedBigInteger('se_id');
 			$table->unsignedBigInteger('loc_id');
             $table->text('key');
-			$table->boolean('status');
+			$table->unsignedBigInteger('task_id')->nullable();
+			$table->boolean('status')->default(0);
 			
 			$table->timestamps();
         });

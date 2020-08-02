@@ -17,5 +17,8 @@ return [
 	'result_url' => 'result_url',
 	'result_title' => 'result_title',
 	'loc_id' => 'loc_id',
-
+	'task_successfully_created' => 'Task successfully created',
+	'dfs_error_method' => 'Error in the ":method_name" method. Details in the log',
+	'task_creation_error' => 'Task creation error',
+	'something_went_wrong' => 'Something went wrong',
 ];

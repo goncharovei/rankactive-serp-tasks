@@ -9,7 +9,8 @@ class Locations extends CommonApiFactory {
 	protected const REDIS_PARAM_NAME_MAP = parent::REDIS_PARAM_NAME_ROOT .
 			parent::REDIS_PARAM_SEPARATOR . 'locations_map_sorted';
 	protected const REDIS_PARAM_NAME_LIST = 'locations';
-
+	public const REDIS_PAGE_SIZE = 1000;
+	
 	public static function add(array $item) {
 		if (empty($item['loc_id'])) {
 			return;
