@@ -21,4 +21,10 @@ return [
 	'dfs_error_method' => 'Error in the ":method_name" method. Details in the log',
 	'task_creation_error' => 'Task creation error',
 	'something_went_wrong' => 'Something went wrong',
+	'keyword' => 'Keyword',
+	'is_there_result' => 'Is there a result',
+	'yes' => 'Yes',
+	'no' => 'No',
+	'the_task' => 'the task',
+	
 ];

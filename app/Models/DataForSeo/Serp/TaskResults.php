@@ -4,7 +4,7 @@ namespace App\Models\DataForSeo\Serp;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tasks extends Model {
+class TaskResults extends Model {
 	protected $table = 'serp_task_results';
 	protected $fillable = [
 		'loc_id',

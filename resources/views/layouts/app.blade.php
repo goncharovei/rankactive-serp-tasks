@@ -28,7 +28,7 @@
 							<a class="nav-link" href="/">{{ trans('task.setting_task') }}</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/">{{ trans('task.tasks_list') }}</a>
+							<a class="nav-link" href="{{ route('task_list') }}">{{ trans('task.tasks_list') }}</a>
 						</li>
 					</ul>
 				</div>

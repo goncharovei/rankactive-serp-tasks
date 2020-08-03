@@ -17,4 +17,7 @@ Route::get('/', 'SerpController@index')->name('task_form');
 Route::get('search-engines', 'SerpController@searchEnginesGet')->name('task_search_engines');
 Route::get('locations', 'SerpController@locationsGet')->name('task_locations');
 Route::post('task-add', 'SerpController@taskAdd')->name('task_add');
+Route::get('tasks', 'SerpController@taskList')->name('task_list');
+Route::get('task-detail/{task}', 'SerpController@taskDetail')->name('task_detail');
+
 

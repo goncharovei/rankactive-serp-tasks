@@ -125,4 +125,18 @@ class SerpController extends Controller {
 		
 		return response()->json($result);
 	}
+	
+	public function taskList() {
+		$pager_list_size = 50;
+		$items = Tasks::latest()->paginate($pager_list_size);
+		return view('tasks.list', compact('items'));
+	}
+	
+	public function taskDetail(Tasks $task) {
+		$pager_list_size = 50;
+		$task_id = $task->id;
+		$items = $task->results()->paginate($pager_list_size);
+		return view('tasks.detail', compact('task_id', 'items'));
+	}
+	
 }

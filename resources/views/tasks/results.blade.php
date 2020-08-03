@@ -24,7 +24,7 @@
 								@foreach ($items as $item)
 								<tr>
 									<th scope="row">{{ $item->id }}</th>
-									<td><a href="{{ route('task_detail', ['task' => $item->id]) }}">{{ $item->key }}</a></td>
+									<td><a href="">{{ $item->key }}</a></td>
 									<td>{{  trans('task.' . ($item->is_processed ? 'yes' : 'no')) }}</td>
 								</tr>
 								@endforeach
