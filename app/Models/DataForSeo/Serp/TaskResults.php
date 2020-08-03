@@ -5,16 +5,12 @@ namespace App\Models\DataForSeo\Serp;
 use Illuminate\Database\Eloquent\Model;
 
 class Tasks extends Model {
-
-	protected $table = 'serp_tasks';
+	protected $table = 'serp_task_results';
 	protected $fillable = [
-		'se_id',
 		'loc_id',
-		'key',
+		'post_key',
+		'result_url',
+		'result_title',
+		'status',
 	];
-
-	public function results() {
-		return $this->hasMany(TaskResults::class, 'task_id', 'id');
-	}
-
 }

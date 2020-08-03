@@ -104,7 +104,7 @@ class SerpController extends Controller {
 			}
 			
 			$post_id = array_key_first($dfs_service_response);
-			$task->task_id = $dfs_service_response[$post_id]['task_id'];
+			$task->serp_task_id = $dfs_service_response[$post_id]['task_id'];
 			$task->save();
 			
 			$result['success'] = 1;
