@@ -14,7 +14,7 @@ abstract class CommonApiFactory {
 	protected const REDIS_PAGE_SIZE = 20;
 	
 	public static function clear() {
-		Redis::unlink(static::keys());
+		Redis::unlink(static::keysAll());
 		Redis::unlink(static::REDIS_PARAM_NAME_MAP);
 	}
 
@@ -29,7 +29,7 @@ abstract class CommonApiFactory {
 				static::REDIS_PARAM_NAME_LIST . self::REDIS_PARAM_SEPARATOR . $id;
 	}
 
-	public static function keys(int $page_number = 1): array {
+	public static function keysRawByPageNumber(int $page_number = 1): array {
 		if ($page_number <= 0) {
 			return [];
 		}
@@ -46,6 +46,11 @@ abstract class CommonApiFactory {
 		}
 		
 		$keys_raw = Redis::lRange(static::REDIS_PARAM_NAME_MAP, $number_start, $number_end);
+		return empty($keys_raw) || !is_array($keys_raw) ? [] : $keys_raw;
+	}
+	
+	public static function keysAll():array {
+		$keys_raw = Redis::lRange(static::REDIS_PARAM_NAME_MAP, 0, -1);
 		if (empty($keys_raw)) {
 			return [];
 		}
@@ -55,17 +60,20 @@ abstract class CommonApiFactory {
 		}, $keys_raw);
 	}
 
-	public static function verbose(string $key) {
+	public static function keyData(string $key): array  {
 		return array_combine(
 			static::verboseFieldNames(),
 			Redis::hMGet($key, static::verboseFieldNames())
 		);
 	}
 	
-	public static function keysData(int $page_number = 1):array {
+	public static function keysDataForJson(int $page_number = 1):array {
 		$result = [];
-		foreach(static::keys($page_number) as $key) {
-			$result[] = static::verbose($key);
+		foreach(static::keysRawByPageNumber($page_number) as $item_id) {
+			$result[] = [
+				'id' => $item_id,
+				'text' => static::verbose($item_id),
+			];
 		}
 		
 		return $result;
@@ -74,4 +82,6 @@ abstract class CommonApiFactory {
 	public static function listSize(): int {
 		return Redis::lLen(static::REDIS_PARAM_NAME_MAP);
 	}
+	
+		
 }

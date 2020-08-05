@@ -33,5 +33,18 @@ class Locations extends CommonApiFactory {
 	protected static function verboseFieldNames(): array {
 		return ['loc_id', 'loc_name', 'loc_name_canonical'];
 	}
-
+	
+	public static function verbose(int $item_id): string {
+		if ($item_id <= 0) {
+			return '';
+		}
+		
+		$key = static::redisParamNameItem($item_id);
+		$item = static::keyData($key);
+		if (empty($item['loc_name_canonical']) || empty($item['loc_id'])) {
+			return '';
+		}
+		
+		return $item['loc_name_canonical'] . ' ID=' . $item['loc_id'];
+	}
 }

@@ -44,7 +44,13 @@ class GetEnginesCommand extends Command {
 			$this->info('Fail. Details in the log');
 			return Command::FAILURE;
 		}
-
+		
+		if (empty($items['results']) || !is_array($items['results'])) {
+			$this->info('Result is empty');
+			return Command::SUCCESS;
+		}
+		$items = $items['results'];
+		
 		SearchEngines::clear();
 
 		usort($items, [SearchEngines::class, 'sort']);

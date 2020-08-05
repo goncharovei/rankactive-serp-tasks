@@ -34,4 +34,18 @@ class SearchEngines extends CommonApiFactory {
 		return ['se_id', 'se_name', 'se_language'];
 	}
 	
+	public static function verbose(int $item_id): string {
+		if ($item_id <= 0) {
+			return '';
+		}
+		
+		$key = static::redisParamNameItem($item_id);
+		$item = static::keyData($key);
+		if (empty($item['se_name']) || empty($item['se_language']) || empty($item['se_id'])) {
+			return '';
+		}
+		
+		return $item['se_name'] . ' (' . $item['se_language'] . '). ID=' . $item['se_id'];
+	}
+	
 }

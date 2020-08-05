@@ -26,5 +26,7 @@ return [
 	'yes' => 'Yes',
 	'no' => 'No',
 	'the_task' => 'the task',
+	'the_search_engine' => 'The Search Engine',
+	'the_location' => 'The Location'
 	
 ];

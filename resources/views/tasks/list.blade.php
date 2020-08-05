@@ -16,6 +16,8 @@
 							<thead>
 								<tr>
 									<th scope="col">#</th>
+									<th scope="col">{{ trans('task.the_search_engine') }}</th>
+									<th scope="col">{{ trans('task.the_location') }}</th>
 									<th scope="col">{{ trans('task.keyword') }}</th>
 									<th scope="col">{{ trans('task.is_there_result') }}</th>
 								</tr>
@@ -24,6 +26,8 @@
 								@foreach ($items as $item)
 								<tr>
 									<th scope="row">{{ $item->id }}</th>
+									<td>{{ $item->engine_name }}</td>
+									<td>{{ $item->location_name }}</td>
 									<td><a href="{{ route('task_detail', ['task' => $item->id]) }}">{{ $item->key }}</a></td>
 									<td>{{  trans('task.' . ($item->is_processed ? 'yes' : 'no')) }}</td>
 								</tr>

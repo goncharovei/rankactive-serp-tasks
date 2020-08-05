@@ -29,13 +29,7 @@ class SerpController extends Controller {
 			return response()->json($result);
 		}
 
-		$items = Locations::keysData($request->input('page', 0));
-		foreach ($items as $item) {
-			$result['items'][] = [
-				'id' => $item['loc_id'],
-				'text' => $item['loc_name_canonical'] . ' ID=' . $item['loc_id'],
-			];
-		}
+		$result['items'] = Locations::keysDataForJson($request->input('page', 0));
 		$result['success'] = 1;
 
 		return response()->json($result);
@@ -50,13 +44,7 @@ class SerpController extends Controller {
 			return response()->json($result);
 		}
 
-		$items = SearchEngines::keysData($request->input('page', 0));
-		foreach ($items as $item) {
-			$result['items'][] = [
-				'id' => $item['se_id'],
-				'text' => $item['se_name'] . ' (' . $item['se_language'] . '). ID=' . $item['se_id'],
-			];
-		}
+		$result['items'] = SearchEngines::keysDataForJson($request->input('page', 0));
 		$result['success'] = 1;
 
 		return response()->json($result);
@@ -94,7 +82,7 @@ class SerpController extends Controller {
 			$dfs_service_response = resolve('DFSService')->srp_tasks_post([
 				$task->id => $validator->valid()
 			]);
-			if (empty($dfs_service_response)) {
+			if (empty($dfs_service_response['results']) || !is_array($dfs_service_response['results'])) {
 				$result['message_box'] = view(
 					'includes.alert_danger',
 					['errors' => [trans('task.dfs_error_method', ['method_name' => 'srp_tasks_post'])]]
@@ -102,6 +90,7 @@ class SerpController extends Controller {
 				$task->delete();
 				return response()->json($result);
 			}
+			$dfs_service_response = $dfs_service_response['results'];
 			
 			$post_id = array_key_first($dfs_service_response);
 			$task->serp_task_id = $dfs_service_response[$post_id]['task_id'];

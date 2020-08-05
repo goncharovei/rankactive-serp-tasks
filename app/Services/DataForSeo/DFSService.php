@@ -30,13 +30,15 @@
 			
 			try {
 				$result = !empty($arguments) ? $this->$method_name($arguments) : $this->$method_name();
-				if ($result['status'] == 'error' || !isset($result['results'])) {
+				if ($result['status'] != 'ok' || !isset($result['results'])) {
 					$error_message = !empty($result['error']) && is_array($result['error']) ?
 							print_r($result['error'], true) : 'Something went wrong';
-					throw new \Exception($error_message);
+					$error_message .= "\n";
+					$error_message .= 'result=' . print_r($result, true);
+					$this->loggerSaveError($error_message);
+					$result = [];
 				}
 				
-				$result = $result['results'];
 			} catch (RestClientException $e) {
 				$this->loggerSaveError(
 					"\n" . 
@@ -75,8 +77,8 @@
 			return $this->client->post($this->api_version . __FUNCTION__, ['data' => $post_array[0]]);
 		}
 		
-		protected function srp_tasks_get(int $task_id = 0): array {
-			$task_id_path = !empty($task_id) ? '/' . $task_id_path : '';
+		protected function srp_tasks_get(array $task_id = []): array {
+			$task_id_path = !empty($task_id[0]) ? '/' . $task_id[0] : '';
 			return $this->client->get($this->api_version . __FUNCTION__ . $task_id_path);
 		}
 		

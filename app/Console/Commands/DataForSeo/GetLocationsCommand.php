@@ -43,7 +43,13 @@ class GetLocationsCommand extends Command {
 			$this->info('Fail. Details in the log');
 			return Command::FAILURE;
 		}
-
+		
+		if (empty($items['results']) || !is_array($items['results'])) {
+			$this->info('Result is empty');
+			return Command::SUCCESS;
+		}
+		$items = $items['results'];
+		
 		Locations::clear();
 		
 		usort($items, [Locations::class, 'sort']);
